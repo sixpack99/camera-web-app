@@ -2,37 +2,45 @@
 <html>
 <head>
     <title>Camera Web App</title>
-    <style>
-        /* Add your CSS styling here */
-    </style>
+    <!-- Include the Webcam.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
 </head>
 <body>
     <div id="app">
-        <input type="file" accept="image/*" capture="camera" id="cameraInput">
-        <button id="captureButton">Capture HSA Receipts</button>
+        <button id="captureButton">Capture Photo</button>
     </div>
 
     <script>
         // Your JavaScript code will go here
         const captureButton = document.getElementById('captureButton');
-const cameraInput = document.getElementById('cameraInput');
 
 captureButton.addEventListener('click', () => {
-    // Trigger the input element to allow the user to take a picture
-    cameraInput.click();
-});
+    // Initialize Webcam.js with the desired settings
+    Webcam.set({
+        width: 640,
+        height: 480,
+        image_format: 'jpeg',
+        jpeg_quality: 90,
+    });
 
-cameraInput.addEventListener('change', (event) => {
-    // Retrieve the selected image file from the input element
-    const imageFile = event.target.files[0];
-  
-    // Display the selected image on the page (optional)
-    const imageElement = document.createElement('img');
-    imageElement.src = URL.createObjectURL(imageFile);
-    document.body.appendChild(imageElement);
+    // Access the camera and capture a photo
+    Webcam.attach('#app');
 
-    // Now you can upload the image to your server or process it as needed
-    // You can access the image data using the `FileReader` API if necessary
+    // Take the photo after a short delay to ensure the camera is ready
+    setTimeout(() => {
+        Webcam.snap((dataURL) => {
+            // Display the captured image on the page (optional)
+            const imageElement = document.createElement('img');
+            imageElement.src = dataURL;
+            document.body.appendChild(imageElement);
+
+            // Now you can upload the image to your server or process it as needed
+            // The captured image is available as a dataURL in the `dataURL` variable
+        });
+
+        // Stop accessing the camera after capturing the photo
+        Webcam.reset();
+    }, 500); // Delay of 500 milliseconds (adjust as needed)
 });
 
     </script>
