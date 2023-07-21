@@ -1,37 +1,20 @@
-// Get access to the user's camera
-const constraints = { video: true };
-const video = document.getElementById('cameraFeed');
-
-async function initCamera() {
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        video.srcObject = stream;
-    } catch (error) {
-        console.error('Error accessing the camera:', error);
-    }
-}
-
-// Call the initCamera function when the page is loaded
-document.addEventListener('DOMContentLoaded', initCamera);
-
 const captureButton = document.getElementById('captureButton');
+const cameraInput = document.getElementById('cameraInput');
 
 captureButton.addEventListener('click', () => {
-    // Create a canvas to capture the image
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    // Trigger the input element to allow the user to take a picture
+    cameraInput.click();
+});
 
-    // Draw the current camera frame onto the canvas
-    const context = canvas.getContext('2d');
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    // Convert the canvas content to a data URL (base64 encoded image)
-    const dataURL = canvas.toDataURL('image/jpeg');
-
-    // You can now use the dataURL to display the image or send it to the server
-    // For example, you can create an <img> element with the captured image:
+cameraInput.addEventListener('change', (event) => {
+    // Retrieve the selected image file from the input element
+    const imageFile = event.target.files[0];
+  
+    // Display the selected image on the page (optional)
     const imageElement = document.createElement('img');
-    imageElement.src = dataURL;
+    imageElement.src = URL.createObjectURL(imageFile);
     document.body.appendChild(imageElement);
+
+    // Now you can upload the image to your server or process it as needed
+    // You can access the image data using the `FileReader` API if necessary
 });
