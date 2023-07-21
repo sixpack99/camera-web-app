@@ -11,38 +11,39 @@
     </div>
 
     <script>
-        // Your JavaScript code will go here
-        const captureButton = document.getElementById('captureButton');
+        // Initialize Webcam.js after the window has finished loading
+        window.addEventListener('load', () => {
+            const captureButton = document.getElementById('captureButton');
 
-captureButton.addEventListener('click', () => {
-    // Initialize Webcam.js with the desired settings
-    Webcam.set({
-        width: 640,
-        height: 480,
-        image_format: 'jpeg',
-        jpeg_quality: 90,
-    });
+            captureButton.addEventListener('click', () => {
+                // Initialize Webcam.js with the desired settings
+                Webcam.set({
+                    width: 640,
+                    height: 480,
+                    image_format: 'jpeg',
+                    jpeg_quality: 90,
+                });
 
-    // Access the camera and capture a photo
-    Webcam.attach('#app');
+                // Access the camera and capture a photo
+                Webcam.attach('#app');
 
-    // Take the photo after a short delay to ensure the camera is ready
-    setTimeout(() => {
-        Webcam.snap((dataURL) => {
-            // Display the captured image on the page (optional)
-            const imageElement = document.createElement('img');
-            imageElement.src = dataURL;
-            document.body.appendChild(imageElement);
+                // Take the photo after a short delay to ensure the camera is ready
+                setTimeout(() => {
+                    Webcam.snap((dataURL) => {
+                        // Display the captured image on the page (optional)
+                        const imageElement = document.createElement('img');
+                        imageElement.src = dataURL;
+                        document.body.appendChild(imageElement);
 
-            // Now you can upload the image to your server or process it as needed
-            // The captured image is available as a dataURL in the `dataURL` variable
+                        // Now you can upload the image to your server or process it as needed
+                        // The captured image is available as a dataURL in the `dataURL` variable
+                    });
+
+                    // Stop accessing the camera after capturing the photo
+                    Webcam.reset();
+                }, 500); // Delay of 500 milliseconds (adjust as needed)
+            });
         });
-
-        // Stop accessing the camera after capturing the photo
-        Webcam.reset();
-    }, 500); // Delay of 500 milliseconds (adjust as needed)
-});
-
     </script>
 </body>
 </html>
