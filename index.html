@@ -9,6 +9,10 @@
         let but = document.getElementById("but");
         let video = document.getElementById("vid");
         let mediaDevices = navigator.mediaDevices;
+        // Fix for iOS Safari from https://leemartin.dev/hello-webrtc-on-safari-11-e8bcb5335295
+        video.setAttribute('autoplay', '');
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', '')
         vid.muted = true;
         but.addEventListener("click", () => {
  
