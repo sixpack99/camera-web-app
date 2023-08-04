@@ -3,6 +3,10 @@ const canvas = document.querySelector('.photo');
 const ctx = canvas.getContext('2d');
 const strip = document.querySelector('.strip');
 const snap = document.querySelector('.snap');
+const captureButton = document.getElementById('captureButton');
+const switchCameraButton = document.getElementById('switchCameraButton');
+const videoContainer = document.getElementById('video-container');
+const cameraFeed = document.getElementById('cameraFeed');
 
 // Fix for iOS Safari from https://leemartin.dev/hello-webrtc-on-safari-11-e8bcb5335295
 video.setAttribute('autoplay', '');
